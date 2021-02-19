@@ -11,8 +11,6 @@ export class OperationListComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
-    console.log(this.operationList);
-  }
+  ngOnInit(): void {}
 
 }

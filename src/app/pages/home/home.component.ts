@@ -9,6 +9,7 @@ import { OperationService } from 'src/app/services';
 export class HomeComponent implements OnInit {
 
   public operations: any;
+  public amount: any;
 
   constructor(
     private _operationService: OperationService
@@ -16,6 +17,7 @@ export class HomeComponent implements OnInit {
     this._operationService.getOperations()
       .subscribe((res:any) => {
         this.operations = res.res;
+        this.amount = res.total;
       });
   }
 
