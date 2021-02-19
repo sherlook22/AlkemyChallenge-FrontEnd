@@ -9,11 +9,11 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
+    <tr *ngFor="let op of operationList">
       <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
+      <td>{{ op.concept }}</td>
+      <td>{{ op.date }}</td>
+      <td>{{ op.amount }}</td>
       <td>
           <button class="btn">M</button>
           <button class="btn">D</button>

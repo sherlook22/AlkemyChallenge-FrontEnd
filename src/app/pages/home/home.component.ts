@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { OperationService } from 'src/app/services';
 
 @Component({
   selector: 'app-home',
@@ -7,9 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  public operations: any;
 
-  ngOnInit(): void {
+  constructor(
+    private _operationService: OperationService
+  ) {
+    this._operationService.getOperations()
+      .subscribe((res:any) => {
+        this.operations = res.res;
+      });
   }
 
+  ngOnInit(): void { }
+  
 }
