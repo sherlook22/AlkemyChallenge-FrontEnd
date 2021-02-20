@@ -1,2 +1,9 @@
-<app-operation-info [total]="amount"></app-operation-info>
-<app-operation-list [operationList]="operations"></app-operation-list>
+<div class="wrapper">
+    <div class="mb-4">
+        <app-operation-info [total]="amount"></app-operation-info>
+        <button class="btn btn-block btn-info">Create Operation</button>
+    </div>
+    <app-modal></app-modal>
+
+    <app-operation-list [operationList]="operations"></app-operation-list>
+</div>
