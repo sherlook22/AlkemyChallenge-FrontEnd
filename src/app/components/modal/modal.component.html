@@ -1,31 +1,74 @@
 <ng-template #content let-modal>
     <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+        <h4 *ngIf="accion != ''" class="modal-title" id="modal-basic-title">{{ accion.name }}</h4>
+        <h4 *ngIf="accion === ''" class="modal-title" id="modal-basic-title">Create Operation</h4>
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
-    <div class="modal-body">
+    
+    <div *ngIf="accion.accion === 'update' || accion === ''" class="modal-body">
         <form>
             <div class="form-group">
-                <label for="dateOfBirth">Date of birth</label>
+                <label for="concept">Concept</label>
+                <input type="text" name="concept" placeholder="Concept" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="dp">Date</label>
                 <div class="input-group">
-                    <input id="dateOfBirth" class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker
-                        #dp="ngbDatepicker" />
+                    <input class="form-control" placeholder="yyyy-mm-dd"
+                           name="dp" ngbDatepicker #d="ngbDatepicker">
                     <div class="input-group-append">
-                        <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button>
+                      <button class="btn btn-info" (click)="d.toggle()" type="button">
+                        <i class="far fa-calendar-alt"></i>
+                      </button>
                     </div>
-                </div>
+                  </div>    
+            </div>
+            <div class="form-group">
+                <label for="amount">Amout</label>
+                <input type="number" name="amount" placeholder="Amount" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="type">Type</label>
+                <select class="form-control" name="" id="">
+                    <option value="0" disabled>Ingrese un tipo</option>
+                    <option value="">Igreso</option>
+                    <option value="">Egreso</option>
+                </select>
             </div>
         </form>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">
+        <button *ngIf="accion.accion !== 'delete'" type="button" class="btn btn-block btn-info" (click)="modal.close('Save click')">
             Save
+        </button>
+        <button *ngIf="accion.accion === 'delete'" type="button" class="btn btn-block btn-danger" (click)="modal.close('Save click')">
+            Delete
         </button>
     </div>
 </ng-template>
 
-<button class="btn btn-block btn-info" (click)="open(content)">
-    Create Operation
+<button 
+    [ngClass]="{
+        'btn' : true,
+        'btn-danger' : accion.accion === 'delete',
+        'btn-info': accion.accion !== 'delete',
+        'btn-block': accion === '',
+        'btn-sm': accion !== ''
+    }" 
+    (click)="open(content)">
+    <ng-container *ngIf="accion === '';else second">
+        Create Operation
+    </ng-container>
+    <ng-template #second>
+        <ng-container *ngIf="accion.accion === 'update';else third">
+            <i class="far fa-edit"></i>
+        </ng-container>
+    </ng-template>
+    <ng-template #third>
+        <ng-container *ngIf="accion.accion === 'delete'">
+            <i class="far fa-trash-alt"></i>
+        </ng-container>
+    </ng-template>
 </button>

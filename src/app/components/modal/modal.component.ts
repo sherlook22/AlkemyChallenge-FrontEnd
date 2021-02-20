@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap'
 
 @Component({
@@ -7,6 +7,8 @@ import { ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap'
   styleUrls: ['./modal.component.scss']
 })
 export class ModalComponent implements OnInit {
+
+  @Input() accion:any;
 
   closeResult = '';
 
@@ -18,8 +20,12 @@ export class ModalComponent implements OnInit {
   }
 
   open(content:any) {
-    this.modal.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+    console.log(this.accion.accion);
+        
+    this.modal.open(content, { size: 'lg', centered: true, ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
+      console.log(this.closeResult);
+      
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });

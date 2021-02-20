@@ -8,6 +8,15 @@ import { Component, Input, OnInit } from '@angular/core';
 export class OperationListComponent implements OnInit {
 
   @Input() operationList: any;
+  update = {
+    name: "Update Operation",
+    accion: "update"
+  };
+  
+  delete = {
+    name: "Delete Operation",
+    accion: "delete"
+  };
 
   constructor() { }
 

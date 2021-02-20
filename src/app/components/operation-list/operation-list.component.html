@@ -1,23 +1,25 @@
-<table class="table">
+<div class="table-responsive">
+<table class="table table-sm">
   <thead class="thead-dark">
     <tr>
-      <th scope="col">#</th>
       <th scope="col">Concept</th>
       <th scope="col">Date</th>
       <th scope="col">Amount</th>
+      <th scope="col">Type</th>
       <th scope="col">Accion</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let op of operationList" class="table-success">
-      <th scope="row">1</th>
       <td>{{ op.concept }}</td>
       <td>{{ op.date }}</td>
       <td>{{ op.amount }}</td>
-      <td>
-          <button class="btn">M</button>
-          <button class="btn">D</button>
+      <td>{{ op.type.name }}</td>
+      <td class="row p-2">
+        <app-modal class="col-lg-2 mb-1" [accion]="update"></app-modal>
+        <app-modal class="col-lg-2" [accion]="delete"></app-modal>
       </td>
     </tr>
   </tbody>
 </table>
+</div>
