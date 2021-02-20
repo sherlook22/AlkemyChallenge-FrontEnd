@@ -16,7 +16,7 @@ import { HttpClientModule } from '@angular/common/http';
     CommonModule,
     HomeRoutingModule,
     ComponentsModule,
-    HttpClientModule  
+    HttpClientModule,
   ],
   providers: [
     OperationService

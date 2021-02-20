@@ -4,6 +4,7 @@ import { OperationInfoComponent } from './operation-info/operation-info.componen
 import { OperationListComponent } from './operation-list/operation-list.component';
 import { ModalComponent } from './modal/modal.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -15,7 +16,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   ],
   imports: [
     CommonModule,
-    NgbModule
+    NgbModule,
   ],
   exports: [
     OperationInfoComponent,

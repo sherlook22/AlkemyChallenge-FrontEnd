@@ -10,10 +10,9 @@ export class HomeComponent implements OnInit {
 
   public operations: any;
   public amount: any;
-  public create = false;
 
   constructor(
-    private _operationService: OperationService
+    private _operationService: OperationService,
   ) {
     this._operationService.getOperations()
       .subscribe((res:any) => {
@@ -24,4 +23,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void { }
   
+  openModal() {
+    
+  }
 }

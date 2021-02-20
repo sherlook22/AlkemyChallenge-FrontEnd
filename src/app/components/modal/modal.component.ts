@@ -10,13 +10,15 @@ export class ModalComponent implements OnInit {
 
   closeResult = '';
 
-  constructor( private modalService: NgbModal ) { }
+  constructor(
+    private modal: NgbModal,
+  ) {}
 
-  ngOnInit(): void {
+  ngOnInit(): void {    
   }
 
   open(content:any) {
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+    this.modal.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
