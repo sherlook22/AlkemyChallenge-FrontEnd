@@ -1,43 +1,104 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap'
+import { Component, Injectable, Input } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NgbActiveModal, 
+         NgbDateAdapter, 
+         NgbDateParserFormatter, 
+         NgbDateStruct, 
+         NgbModal} from '@ng-bootstrap/ng-bootstrap'
 
+@Injectable()
+export class CustomAdapter extends NgbDateAdapter<string> {
+
+  readonly DELIMITER = '/';
+
+  fromModel(value: string | null): NgbDateStruct | null {
+    if (value) {
+      let date = value.split(this.DELIMITER);
+      return {
+        day : parseInt(date[0], 10),
+        month : Number(date[1]),
+        year : parseInt(date[2], 10)
+      };
+    }
+    return null;
+  }
+
+  toModel(date: NgbDateStruct | null): string | null {
+    return date ? date.day + this.DELIMITER + date.month + this.DELIMITER + date.year : null;
+  }
+}
+@Injectable()
+export class CustomDateParserFormatter extends NgbDateParserFormatter {
+
+  readonly DELIMITER = '/';
+
+  parse(value: string): NgbDateStruct | null {
+    if (value) {
+      let date = value.split(this.DELIMITER);
+      
+      return {
+        day : parseInt(date[0], 10),
+        month : parseInt(date[1], 10),
+        year : parseInt(date[2], 10)
+      };
+    }
+    return null;
+  }
+
+  format(date: NgbDateStruct | null): string {
+    return date ? date.day + this.DELIMITER + date.month + this.DELIMITER + date.year : '';
+  }
+}
 @Component({
   selector: 'app-modal',
   templateUrl: './modal.component.html',
-  styleUrls: ['./modal.component.scss']
+  styleUrls: ['./modal.component.scss'],
+  providers: [
+    {provide: NgbDateAdapter, useClass: CustomAdapter},
+    {provide: NgbDateParserFormatter, useClass: CustomDateParserFormatter}
+  ]
 })
-export class ModalComponent implements OnInit {
+export class ModalComponent{
 
   @Input() accion:any;
+  public operationForm : FormGroup;
 
   closeResult = '';
 
   constructor(
     private modal: NgbModal,
-  ) {}
-
-  ngOnInit(): void {    
-  }
-
-  open(content:any) {
-    console.log(this.accion.accion);
-        
-    this.modal.open(content, { size: 'lg', centered: true, ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-      console.log(this.closeResult);
-      
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    private fb: FormBuilder
+  ) {
+    //The form should be create in another component
+    this.operationForm = this.fb.group({
+      concept: ['', Validators.required],
+      date   : ['', Validators.required],
+      amount : ['', Validators.required],
+      type   : ['', Validators.required]
     });
   }
 
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
+  open(content:any) {
+    this.operationForm.reset();
+
+    this.modal.open(content, { 
+      size: 'lg', 
+      centered: true, 
+      ariaLabelledBy: 'modal-basic-title' 
+    });
+  }
+
+  createOrUpdateOperation(modal: NgbActiveModal) {
+    if(this.operationForm.invalid) {
+      Object.values( this.operationForm.controls).forEach((ctls) => {
+        ctls.markAsTouched();
+      })
+    }
+
+    if(!this.operationForm.invalid) {
+      console.log("Formulario Correcto");
+      modal.close()
+      this.operationForm.reset();
     }
   }
 

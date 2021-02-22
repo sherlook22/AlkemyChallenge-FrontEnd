@@ -8,16 +8,34 @@
     </div>
     
     <div *ngIf="accion.accion === 'update' || accion === ''" class="modal-body">
-        <form>
+        
+        <form [formGroup]="operationForm">
+            <!-- Concept -->
             <div class="form-group">
                 <label for="concept">Concept</label>
-                <input type="text" name="concept" placeholder="Concept" class="form-control">
+                <input 
+                    type="text" 
+                    name="concept" 
+                    placeholder="Concept" 
+                    class="form-control"
+                    formControlName="concept"
+                    [class.is-invalid]="operationForm.get('concept')?.invalid && operationForm.get('concept')?.touched"
+                >
             </div>
+            <!-- Date -->
             <div class="form-group">
                 <label for="dp">Date</label>
                 <div class="input-group">
-                    <input class="form-control" placeholder="yyyy-mm-dd"
-                           name="dp" ngbDatepicker #d="ngbDatepicker">
+                    <input 
+                        class="form-control" 
+                        placeholder="dd/mm/yyyy"
+                        name="dp" 
+                        ngbDatepicker 
+                        #d="ngbDatepicker"
+                        (click)="d.toggle()"
+                        formControlName="date"
+                        [class.is-invalid]="operationForm.get('date')?.invalid && operationForm.get('date')?.touched"
+                    >
                     <div class="input-group-append">
                       <button class="btn btn-info" (click)="d.toggle()" type="button">
                         <i class="far fa-calendar-alt"></i>
@@ -25,22 +43,36 @@
                     </div>
                   </div>    
             </div>
+            <!-- Amoutn -->
             <div class="form-group">
                 <label for="amount">Amout</label>
-                <input type="number" name="amount" placeholder="Amount" class="form-control">
+                <input 
+                    type="number" 
+                    name="amount" 
+                    placeholder="Amount" 
+                    class="form-control"
+                    formControlName="amount"
+                    [class.is-invalid]="operationForm.get('amount')?.invalid && operationForm.get('amount')?.touched"
+                >
             </div>
+            <!-- Type -->
             <div class="form-group">
                 <label for="type">Type</label>
-                <select class="form-control" name="" id="">
+                <select 
+                    class="form-control" 
+                    formControlName="type"
+                    [class.is-invalid]="operationForm.get('type')?.invalid && operationForm.get('type')?.touched"
+                >
                     <option value="0" disabled>Ingrese un tipo</option>
-                    <option value="">Igreso</option>
-                    <option value="">Egreso</option>
+                    <option value="1">Igreso</option>
+                    <option value="2">Egreso</option>
                 </select>
             </div>
+
         </form>
     </div>
     <div class="modal-footer">
-        <button *ngIf="accion.accion !== 'delete'" type="button" class="btn btn-block btn-info" (click)="modal.close('Save click')">
+        <button *ngIf="accion.accion !== 'delete'" type="button" class="btn btn-block btn-info" (click)="createOrUpdateOperation(modal)">
             Save
         </button>
         <button *ngIf="accion.accion === 'delete'" type="button" class="btn btn-block btn-danger" (click)="modal.close('Save click')">
