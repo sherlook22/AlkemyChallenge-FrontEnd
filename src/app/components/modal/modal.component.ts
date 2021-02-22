@@ -91,7 +91,7 @@ export class ModalComponent{
     });
   }
 
-  createOrUpdateOperation(modal: NgbActiveModal) {
+  createOrUpdateOperation(modal: NgbActiveModal, operation='') {
     if(this.operationForm.invalid) {
       Object.values( this.operationForm.controls).forEach((ctls) => {
         ctls.markAsTouched();

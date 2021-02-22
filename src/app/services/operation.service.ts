@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment'
+import { Observable, Subject } from 'rxjs';
+import { tap } from 'rxjs/operators'
 
 @Injectable({
   providedIn: 'root'
 })
 export class OperationService {
-
   private api_url : string;
+  private refresh$ = new Subject<void>();
 
   constructor(
     private http: HttpClient
@@ -15,14 +17,22 @@ export class OperationService {
     this.api_url = environment.api_url
   }
 
+  get refresh() {
+    return this.refresh$;
+  }
+
   public getOperations() {
     return this.http.get(`${this.api_url}/operation/index`);
   }
 
   //Should be created the interface for Operation
-  public createOperation(operation: any) {
+  public createOperation(operation: any): Observable<any> {
     return this.http.post(`${this.api_url}/operation/register`, {
       operation
-    });
+    }).pipe(
+      tap(() => {
+        this.refresh$.next();
+      })
+    );
   }
 }

@@ -56,7 +56,7 @@
                 >
             </div>
             <!-- Type -->
-            <div class="form-group">
+            <div class="form-group" *ngIf="accion.accion !== 'update'">
                 <label for="type">Type</label>
                 <select 
                     class="form-control" 
