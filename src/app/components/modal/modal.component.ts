@@ -5,7 +5,9 @@ import { NgbActiveModal,
          NgbDateParserFormatter, 
          NgbDateStruct, 
          NgbModal} from '@ng-bootstrap/ng-bootstrap'
+import { OperationService } from 'src/app/services';
 
+//These two injectables manage the date picker
 @Injectable()
 export class CustomAdapter extends NgbDateAdapter<string> {
 
@@ -67,7 +69,8 @@ export class ModalComponent{
 
   constructor(
     private modal: NgbModal,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private _operationService: OperationService
   ) {
     //The form should be create in another component
     this.operationForm = this.fb.group({
@@ -96,7 +99,11 @@ export class ModalComponent{
     }
 
     if(!this.operationForm.invalid) {
-      console.log("Formulario Correcto");
+      
+      this._operationService.createOperation(this.operationForm.value)
+        .subscribe((res) => {
+          console.log(res);
+        });
       modal.close()
       this.operationForm.reset();
     }
