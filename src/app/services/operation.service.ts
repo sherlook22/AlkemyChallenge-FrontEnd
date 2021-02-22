@@ -35,4 +35,25 @@ export class OperationService {
       })
     );
   }
+
+  public updateOperation(operation: any) {
+    return this.http.put(`${this.api_url}/operation/update`, {
+      operation
+    }).pipe(
+      tap(() => {
+        this.refresh$.next();
+      })
+    );
+  }
+  
+  public deleteOperation(operation: any) {
+    return this.http.put(`${this.api_url}/operation/delete`, {
+      operation
+    }).pipe(
+      tap(() => {
+        this.refresh$.next();
+      })
+    );
+  }
+
 }

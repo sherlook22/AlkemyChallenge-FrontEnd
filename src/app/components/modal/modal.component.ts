@@ -7,6 +7,7 @@ import { NgbActiveModal,
          NgbModal} from '@ng-bootstrap/ng-bootstrap'
 import { OperationService } from 'src/app/services';
 
+/*#####################################################################################*/
 //These two injectables manage the date picker
 @Injectable()
 export class CustomAdapter extends NgbDateAdapter<string> {
@@ -51,6 +52,8 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
     return date ? date.day + this.DELIMITER + date.month + this.DELIMITER + date.year : '';
   }
 }
+
+/*#####################################################################################*/
 @Component({
   selector: 'app-modal',
   templateUrl: './modal.component.html',
@@ -63,9 +66,10 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
 export class ModalComponent{
 
   @Input() accion:any;
-  public operationForm : FormGroup;
+  @Input() updOperation: any;
+  @Input() delOperation: any;
 
-  closeResult = '';
+  public operationForm : FormGroup;
 
   constructor(
     private modal: NgbModal,
@@ -74,24 +78,41 @@ export class ModalComponent{
   ) {
     //The form should be create in another component
     this.operationForm = this.fb.group({
+      id: [''],
       concept: ['', Validators.required],
       date   : ['', Validators.required],
       amount : ['', Validators.required],
       type   : ['', Validators.required]
     });
   }
-
+/*#####################################################################################*/
   open(content:any) {
+    console.log(this.updOperation);
     this.operationForm.reset();
-
+    this.accion.accion === 'update' ? this.chargeBaseInfo():'';
     this.modal.open(content, { 
       size: 'lg', 
       centered: true, 
       ariaLabelledBy: 'modal-basic-title' 
     });
   }
+/*#####################################################################################*/
+  chargeBaseInfo() {
+    let {id, concept, date, amount, type} = this.updOperation;
 
-  createOrUpdateOperation(modal: NgbActiveModal, operation='') {
+    let formatDate = date.split('-');
+    formatDate = formatDate.reverse().join('/');
+
+    this.operationForm.setValue({
+      id: id,
+      concept: concept,
+      date: formatDate,
+      amount: amount,
+      type: type.id
+    });
+  }
+/*#####################################################################################*/
+  operationAccion(modal: NgbActiveModal) {
     if(this.operationForm.invalid) {
       Object.values( this.operationForm.controls).forEach((ctls) => {
         ctls.markAsTouched();
@@ -99,14 +120,41 @@ export class ModalComponent{
     }
 
     if(!this.operationForm.invalid) {
+      console.log(this.accion);
       
-      this._operationService.createOperation(this.operationForm.value)
+      if(this.accion === '') {
+        this.createOperation(modal);
+      }
+      if(this.accion.accion === 'update') {
+        this.updateOperation(modal);
+      }
+      if(this.accion.accion === 'delete') {
+        // this.deleteOperation(modal);
+      }
+    }
+  }
+/*#####################################################################################*/
+  createOperation(modal: NgbActiveModal) {
+    this._operationService.createOperation(this.operationForm.value)
         .subscribe((res) => {
           console.log(res);
         });
       modal.close()
       this.operationForm.reset();
-    }
   }
+/*#####################################################################################*/  
+  updateOperation(modal: NgbActiveModal) {
+    this._operationService.updateOperation(this.operationForm.value)
+      .subscribe((res) => {
+        console.log(res);
+      })
+    modal.close();
+    this.operationForm.reset();
+  }
+
+  // deleteOperation(modal: NgbActiveModal) {
+  //   console.log(modal);
+    
+  // }
 
 }

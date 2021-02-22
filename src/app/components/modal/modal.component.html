@@ -72,7 +72,7 @@
         </form>
     </div>
     <div class="modal-footer">
-        <button *ngIf="accion.accion !== 'delete'" type="button" class="btn btn-block btn-info" (click)="createOrUpdateOperation(modal)">
+        <button *ngIf="accion.accion !== 'delete'" type="button" class="btn btn-block btn-info" (click)="operationAccion(modal)">
             Save
         </button>
         <button *ngIf="accion.accion === 'delete'" type="button" class="btn btn-block btn-danger" (click)="modal.close('Save click')">
