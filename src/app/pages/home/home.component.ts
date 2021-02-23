@@ -11,6 +11,8 @@ export class HomeComponent implements OnDestroy {
 
   public operations: any;
   public amount: any;
+  public totalPages: any;
+  public currentPage: any;
   public subscription: Subscription;
 
   constructor(
@@ -26,12 +28,18 @@ export class HomeComponent implements OnDestroy {
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
+
+  paginate(p:any) {
+    this.getOperations(p);
+  }
   
-  getOperations() {
-    this._operationService.getOperations()
+  getOperations(page=1) {
+    this._operationService.getOperations(page)
       .subscribe((res:any) => {
-        this.operations = res.res;
+        this.operations = res.res.operations;
         this.amount = res.total;
+        this.totalPages = res.res.totalPages;
+        this.currentPage = res.res.currentPage;
       });
   }
 

@@ -4,7 +4,8 @@ import { OperationInfoComponent } from './operation-info/operation-info.componen
 import { OperationListComponent } from './operation-list/operation-list.component';
 import { ModalComponent } from './modal/modal.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+import { PaginationComponent } from './pagination/pagination.component';
 
 
 
@@ -12,7 +13,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   declarations: [
     OperationInfoComponent,
     OperationListComponent,
-    ModalComponent
+    ModalComponent,
+    PaginationComponent
   ],
   imports: [
     CommonModule,
@@ -22,7 +24,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   exports: [
     OperationInfoComponent,
     OperationListComponent,
-    ModalComponent
+    ModalComponent,
+    PaginationComponent
   ]
 })
 export class ComponentsModule { }

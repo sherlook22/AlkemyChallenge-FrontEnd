@@ -21,8 +21,8 @@ export class OperationService {
     return this.refresh$;
   }
 
-  public getOperations() {
-    return this.http.get(`${this.api_url}/operation/index`);
+  public getOperations(page=1) {
+    return this.http.get(`${this.api_url}/operation/index?page=${page}`);
   }
 
   //Should be created the interface for Operation

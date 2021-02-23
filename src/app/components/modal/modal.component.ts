@@ -87,7 +87,6 @@ export class ModalComponent{
   }
 /*#####################################################################################*/
   open(content:any) {
-    console.log(this.updOperation);
     this.operationForm.reset();
     this.accion.accion === 'update' ? this.chargeBaseInfo():'';
     this.modal.open(content, { 
@@ -120,26 +119,20 @@ export class ModalComponent{
     }
 
     if(!this.operationForm.invalid) {
-      console.log(this.accion);
-      
       this.accion === '' ? this.createOperation(modal) : this.updateOperation(modal);
     }
   }
 /*#####################################################################################*/
   createOperation(modal: NgbActiveModal) {
     this._operationService.createOperation(this.operationForm.value)
-        .subscribe((res) => {
-          console.log(res);
-        });
+        .subscribe();
       modal.close()
       this.operationForm.reset();
   }
 /*#####################################################################################*/  
   updateOperation(modal: NgbActiveModal) {
     this._operationService.updateOperation(this.operationForm.value)
-      .subscribe((res) => {
-        console.log(res);
-      })
+      .subscribe()
     modal.close();
     this.operationForm.reset();
   }
@@ -147,9 +140,7 @@ export class ModalComponent{
   deleteOperation(modal: NgbActiveModal) {
     const { id } = this.delOperation;
     this._operationService.deleteOperation(id)
-      .subscribe((res) => {
-        console.log(res);
-      })
+      .subscribe()
     modal.close();
     this.operationForm.reset();
   }

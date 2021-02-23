@@ -4,4 +4,10 @@
         <app-modal [accion]="''"></app-modal>
     </div>
     <app-operation-list [operationList]="operations"></app-operation-list>
+    <app-pagination 
+        class="d-flex justify-content-center"
+        (page)="paginate($event)" 
+        [totalPages]="totalPages" 
+        [currentPage]="currentPage">
+    </app-pagination>
 </div>
