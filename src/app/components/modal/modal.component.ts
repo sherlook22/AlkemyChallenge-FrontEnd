@@ -122,15 +122,7 @@ export class ModalComponent{
     if(!this.operationForm.invalid) {
       console.log(this.accion);
       
-      if(this.accion === '') {
-        this.createOperation(modal);
-      }
-      if(this.accion.accion === 'update') {
-        this.updateOperation(modal);
-      }
-      if(this.accion.accion === 'delete') {
-        // this.deleteOperation(modal);
-      }
+      this.accion === '' ? this.createOperation(modal) : this.updateOperation(modal);
     }
   }
 /*#####################################################################################*/
@@ -152,9 +144,14 @@ export class ModalComponent{
     this.operationForm.reset();
   }
 
-  // deleteOperation(modal: NgbActiveModal) {
-  //   console.log(modal);
-    
-  // }
+  deleteOperation(modal: NgbActiveModal) {
+    const { id } = this.delOperation;
+    this._operationService.deleteOperation(id)
+      .subscribe((res) => {
+        console.log(res);
+      })
+    modal.close();
+    this.operationForm.reset();
+  }
 
 }

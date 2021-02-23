@@ -75,7 +75,7 @@
         <button *ngIf="accion.accion !== 'delete'" type="button" class="btn btn-block btn-info" (click)="operationAccion(modal)">
             Save
         </button>
-        <button *ngIf="accion.accion === 'delete'" type="button" class="btn btn-block btn-danger" (click)="modal.close('Save click')">
+        <button *ngIf="accion.accion === 'delete'" type="button" class="btn btn-block btn-danger" (click)="deleteOperation(modal)">
             Delete
         </button>
     </div>

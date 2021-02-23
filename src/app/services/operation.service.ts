@@ -46,10 +46,9 @@ export class OperationService {
     );
   }
   
-  public deleteOperation(operation: any) {
-    return this.http.put(`${this.api_url}/operation/delete`, {
-      operation
-    }).pipe(
+  public deleteOperation(id:any) {
+    return this.http.delete(`${this.api_url}/operation/delete/${id}`)
+    .pipe(
       tap(() => {
         this.refresh$.next();
       })
