@@ -83,7 +83,7 @@ export class ModalComponent{
       id: [''],
       concept: ['', Validators.required],
       date   : ['', Validators.required],
-      amount : ['', Validators.required],
+      amount : ['', [Validators.required, Validators.pattern(/^[+]?([0-9]+(?:[\.][0-9]*)?|\.[0-9]+)$/)]],
       type   : ['', Validators.required]
     });
     this.getTypes();

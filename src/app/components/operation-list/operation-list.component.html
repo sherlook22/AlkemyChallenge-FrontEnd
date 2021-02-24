@@ -9,7 +9,8 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let op of operationList" class="table-success">
+    <tr *ngFor="let op of operationList" 
+      [ngClass]="{'table-success': op.type.name === 'Ingreso', 'table-danger': op.type.name === 'Egreso'}">
       <td>{{ op.concept }}</td>
       <td>{{ op.date | date: 'dd/MM/yyyy' }}</td>
       <td>{{ op.amount | number : '1.2-2' }}</td>
