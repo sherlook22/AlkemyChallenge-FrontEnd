@@ -5,7 +5,7 @@ import { NgbActiveModal,
          NgbDateParserFormatter, 
          NgbDateStruct, 
          NgbModal} from '@ng-bootstrap/ng-bootstrap'
-import { OperationService } from 'src/app/services';
+import { OperationService, TypeService } from 'src/app/services';
 
 /*#####################################################################################*/
 //These two injectables manage the date picker
@@ -68,13 +68,15 @@ export class ModalComponent{
   @Input() accion:any;
   @Input() updOperation: any;
   @Input() delOperation: any;
+  types : any;
 
   public operationForm : FormGroup;
 
   constructor(
     private modal: NgbModal,
     private fb: FormBuilder,
-    private _operationService: OperationService
+    private _operationService: OperationService,
+    private _typeService: TypeService
   ) {
     //The form should be create in another component
     this.operationForm = this.fb.group({
@@ -84,6 +86,7 @@ export class ModalComponent{
       amount : ['', Validators.required],
       type   : ['', Validators.required]
     });
+    this.getTypes();
   }
 /*#####################################################################################*/
   open(content:any) {
@@ -109,6 +112,12 @@ export class ModalComponent{
       amount: amount,
       type: type.id
     });
+  }
+/*#####################################################################################*/
+  getTypes() {
+    this._typeService.getTypes().subscribe((res:any) =>{
+      this.types = res.res;
+    })
   }
 /*#####################################################################################*/
   operationAccion(modal: NgbActiveModal) {

@@ -13,6 +13,6 @@ export class TypeService {
   }
 
   getTypes() {
-    return this.http.get(`${this.base_url}/type/index}`);
+    return this.http.get(`${this.base_url}/type/index`);
   }
 }

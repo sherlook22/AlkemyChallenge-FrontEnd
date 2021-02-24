@@ -74,9 +74,8 @@
                     formControlName="type"
                     [class.is-invalid]="operationForm.get('type')?.invalid && operationForm.get('type')?.touched"
                 >
-                    <option value="" disabled>Ingrese un tipo</option>
-                    <option value="1">Ingreso</option>
-                    <option value="2">Egreso</option>
+                    <option [ngValue]="null" disabled>Ingrese un tipo</option>
+                    <option *ngFor="let type of types" value="{{ type.id }}">{{ type.name }}</option>
                 </select>
                 <small *ngIf="operationForm.get('type')?.invalid && operationForm.get('type')?.touched"
                     class="text-danger">

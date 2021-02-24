@@ -12,7 +12,7 @@
     <tr *ngFor="let op of operationList" class="table-success">
       <td>{{ op.concept }}</td>
       <td>{{ op.date | date: 'dd/MM/yyyy' }}</td>
-      <td>{{ op.amount }}</td>
+      <td>{{ op.amount | number : '1.2-2' }}</td>
       <td>{{ op.type.name }}</td>
       <td class="row p-2">
         <app-modal class="col-lg-2 mb-1" [accion]="update" [updOperation]="op"></app-modal>
