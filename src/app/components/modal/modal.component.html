@@ -12,19 +12,22 @@
         <form [formGroup]="operationForm">
             <!-- Concept -->
             <div class="form-group">
-                <label for="concept">Concept</label>
+                <label for="concept">Concepto</label>
                 <input 
                     type="text" 
                     name="concept" 
-                    placeholder="Concept" 
+                    placeholder="Concepto" 
                     class="form-control"
                     formControlName="concept"
                     [class.is-invalid]="operationForm.get('concept')?.invalid && operationForm.get('concept')?.touched"
                 >
+                <small *ngIf="operationForm.get('concept')?.invalid && operationForm.get('concept')?.touched" 
+                    class="text-danger">El Concepto es requerido
+                </small>
             </div>
             <!-- Date -->
             <div class="form-group">
-                <label for="dp">Date</label>
+                <label for="dp">Fecha</label>
                 <div class="input-group">
                     <input 
                         class="form-control" 
@@ -42,31 +45,43 @@
                       </button>
                     </div>
                   </div>    
+                  <small *ngIf="operationForm.get('date')?.invalid && operationForm.get('date')?.touched"
+                  class="text-danger">
+                      La Fecha es requerida
+                  </small>
             </div>
             <!-- Amoutn -->
             <div class="form-group">
-                <label for="amount">Amout</label>
+                <label for="amount">Monto</label>
                 <input 
                     type="number" 
                     name="amount" 
-                    placeholder="Amount" 
+                    placeholder="Monto" 
                     class="form-control"
                     formControlName="amount"
                     [class.is-invalid]="operationForm.get('amount')?.invalid && operationForm.get('amount')?.touched"
                 >
+                <small *ngIf="operationForm.get('amount')?.invalid && operationForm.get('amount')?.touched" 
+                    class="text-danger">
+                    El Monto es requerido
+                </small>
             </div>
             <!-- Type -->
             <div class="form-group" *ngIf="accion.accion !== 'update'">
-                <label for="type">Type</label>
+                <label for="type">Tipo</label>
                 <select 
                     class="form-control" 
                     formControlName="type"
                     [class.is-invalid]="operationForm.get('type')?.invalid && operationForm.get('type')?.touched"
                 >
-                    <option value="0" disabled>Ingrese un tipo</option>
-                    <option value="1">Igreso</option>
+                    <option value="" disabled>Ingrese un tipo</option>
+                    <option value="1">Ingreso</option>
                     <option value="2">Egreso</option>
                 </select>
+                <small *ngIf="operationForm.get('type')?.invalid && operationForm.get('type')?.touched"
+                    class="text-danger">
+                    El Tipo es requerido
+                </small>
             </div>
 
         </form>
@@ -91,7 +106,7 @@
     }" 
     (click)="open(content)">
     <ng-container *ngIf="accion === '';else second">
-        Create Operation
+        Crear operacion
     </ng-container>
     <ng-template #second>
         <ng-container *ngIf="accion.accion === 'update';else third">
