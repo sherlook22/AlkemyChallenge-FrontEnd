@@ -1,0 +1,26 @@
+.row{
+    height: 100vh;
+    .card {
+        height: 350px;
+        margin-top: 8rem;
+        background-color: #343a40;
+        border-color: #454d55;
+        .card-body {
+            padding: 1rem 2rem 2rem 2rem;
+            .form-group {
+                color: #17a2b8;
+                font-size: 1.3rem;
+                margin-top: 5px;
+                label,input {
+                    margin-top: 6px;
+                }
+                a{
+                    color: #17a2b8;
+                }
+            }
+            .btn {
+                margin-top: 1.5rem;
+            }
+        }
+    }
+}
