@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Router } from '@angular/router';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,11 @@ export class AuthService {
   ) { }
 
   login(user: any ) {
-    return this.http.post(`${this.apiUrl}/login`, user);
+    return this.http.post(`${this.apiUrl}/auth/login`, user).pipe(
+      tap((res:any) => {
+        this.saveToken(res.res);
+      })
+    );
   }
 
   loggedIn(): boolean {
@@ -24,6 +29,10 @@ export class AuthService {
 
   getToken() {
     return localStorage.getItem('token');
+  }
+
+  private saveToken(token: string) {
+    localStorage.setItem('token', token);
   }
   
   logOut() {
