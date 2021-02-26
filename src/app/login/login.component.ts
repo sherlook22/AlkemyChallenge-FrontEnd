@@ -19,17 +19,21 @@ export class LoginComponent implements OnInit {
     private router: Router
   ) {
     this.loginForm = this.fb.group({
-      email: [''],
-      password: ['']
+      email: ['', [Validators.required, Validators.pattern(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)]],
+      password: ['', Validators.required]
     });
   }
 
   ngOnInit(): void {
   }
 
+  loginAccion() {
+    Object.values( this.loginForm.controls).forEach((ctls) => {
+      ctls.markAsTouched();
+    })
+  }
+
   validateData() {
-    console.log(this.loginForm.value);
-    
     if(this.loginForm.valid) {
       this._authService.login(this.loginForm.value)
         .subscribe((res) => {
@@ -38,7 +42,7 @@ export class LoginComponent implements OnInit {
           console.log(err);
         });
     }
-
+    this.loginAccion();
   }
 
 }
