@@ -23,8 +23,18 @@ export class AuthService {
     );
   }
 
-  loggedIn(): boolean {
-    return !!localStorage.getItem('token');
+  loggedIn() {
+    const token: any = localStorage.getItem('token');
+    
+    if(!token) return false;
+    
+    const payload:any = JSON.parse(atob(token?.split('.')[1]));
+    
+    if(Date.now() >= payload.exp) {
+      this.logOut();      
+      return false;
+    }
+    return true;
   }
 
   getToken() {
