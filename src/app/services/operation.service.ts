@@ -21,14 +21,15 @@ export class OperationService {
     return this.refresh$;
   }
 
-  public getOperations(page=1) {
-    return this.http.get(`${this.api_url}/operation/index?page=${page}`);
+  public getOperations(page=1, user: any) {
+    return this.http.get(`${this.api_url}/operation/index?page=${page}&user=${user}`);
   }
 
   //Should be created the interface for Operation
-  public createOperation(operation: any): Observable<any> {
+  public createOperation(operation: any, user: any): Observable<any> {
     return this.http.post(`${this.api_url}/operation/register`, {
-      operation
+      operation,
+      user
     }).pipe(
       tap(() => {
         this.refresh$.next();
