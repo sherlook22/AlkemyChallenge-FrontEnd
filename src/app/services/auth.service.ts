@@ -24,17 +24,22 @@ export class AuthService {
   }
 
   loggedIn() {
-    const token: any = localStorage.getItem('token');
+    const payload: any = this.decodeToken();
     
-    if(!token) return false;
-    
-    const payload:any = JSON.parse(atob(token?.split('.')[1]));
+    if(!payload) return false;
     
     if(Date.now() >= payload.exp) {
       this.logOut();      
       return false;
     }
     return true;
+  }
+
+  decodeToken() {
+    const token:any = this.getToken();
+    if(!token) return false;
+    const payload:any = JSON.parse(atob(token?.split('.')[1]));
+    return payload;
   }
 
   getToken() {
