@@ -23,6 +23,10 @@ export class AuthService {
     );
   }
 
+  register(user: any) {
+    return this.http.post(`${this.apiUrl}/auth/register`, user);
+  }
+
   loggedIn() {
     const payload: any = this.decodeToken();
     
