@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from '../services';
 
 @Component({
   selector: 'app-register',
@@ -11,10 +13,12 @@ export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
 
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private _authService: AuthService,
+    private router: Router
   ) {
     this.registerForm = this.fb.group({
-      email: ['', Validators.required],
+      email: ['', [Validators.required, Validators.pattern(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)]],
       password: ['', Validators.required],
       password2: ['', Validators.required]
     }, {
@@ -40,10 +44,16 @@ export class RegisterComponent implements OnInit {
   }
 
   validateData(){
-    console.log(this.registerForm.valid);
-    console.log(this.registerForm.value);
-    this.registerAccion()
-    
+    if(!this.registerForm.valid) {
+      this.registerAccion()
+    }
+    const { email, password } = this.registerForm.value;
+
+    this._authService.register({email, password}).subscribe(
+      (res) => {
+        this.router.navigate(['/login']);
+      }
+    )
   }
 
 }
