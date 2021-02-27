@@ -103,6 +103,7 @@ export class ModalComponent{
   chargeBaseInfo() {
     let {id, concept, date, amount, type} = this.updOperation;
 
+    amount = amount <= 0 ? -amount : amount;
     let formatDate = date.split('-');
     formatDate = formatDate.reverse().join('/');
 

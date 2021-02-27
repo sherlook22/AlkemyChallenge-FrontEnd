@@ -1,8 +1,18 @@
 .card {
     text-align: center;
-
     .card-header{
         color: #fbfbff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .button {
+            position: absolute;
+            top: 1.6rem;
+            right: 1.5rem;
+            button{
+                font-size: 0.7rem;
+            }
+        }
     }
 }
 
