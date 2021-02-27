@@ -5,7 +5,7 @@ import { NgbActiveModal,
          NgbDateParserFormatter, 
          NgbDateStruct, 
          NgbModal} from '@ng-bootstrap/ng-bootstrap'
-import { OperationService, TypeService } from 'src/app/services';
+import { AuthService, OperationService, TypeService } from 'src/app/services';
 
 /*#####################################################################################*/
 //These two injectables manage the date picker
@@ -76,6 +76,7 @@ export class ModalComponent{
     private modal: NgbModal,
     private fb: FormBuilder,
     private _operationService: OperationService,
+    private _authService: AuthService,
     private _typeService: TypeService
   ) {
     //The form should be create in another component
@@ -133,7 +134,8 @@ export class ModalComponent{
   }
 /*#####################################################################################*/
   createOperation(modal: NgbActiveModal) {
-    this._operationService.createOperation(this.operationForm.value)
+    const user:any = this._authService.decodeToken();
+    this._operationService.createOperation(this.operationForm.value, user.sub)
         .subscribe();
       modal.close()
       this.operationForm.reset();
