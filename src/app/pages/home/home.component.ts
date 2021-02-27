@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { OperationService } from 'src/app/services';
+import { AuthService, OperationService } from 'src/app/services';
 
 @Component({
   selector: 'app-home',
@@ -13,11 +13,15 @@ export class HomeComponent implements OnDestroy {
   public amount: any;
   public totalPages: any;
   public currentPage: any;
+  public user: any;
   public subscription: Subscription;
 
   constructor(
     private _operationService: OperationService,
+    private _authService: AuthService
   ) {
+    this.user = this._authService.decodeToken();
+
     this.getOperations();
 
     this.subscription = this._operationService.refresh.subscribe(() => {
@@ -34,7 +38,7 @@ export class HomeComponent implements OnDestroy {
   }
   
   getOperations(page=1) {
-    this._operationService.getOperations(page)
+    this._operationService.getOperations(page, this.user.sub)
       .subscribe((res:any) => {
         this.operations = res.res.operations;
         this.amount = res.total;
