@@ -11,7 +11,7 @@ import { AuthService } from '../services';
 export class LoginComponent implements OnInit {
 
   public loginForm: FormGroup;
-  // public msj: string;
+  public msj: any;
 
   constructor(
     private _authService: AuthService,
@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
         .subscribe((res) => {
           this.router.navigate(['/']);
         },(err) => {
-          console.log(err);
+          this.msj = err.error;
         });
     }
     this.loginAccion();
